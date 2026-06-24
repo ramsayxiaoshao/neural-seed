@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from tensor import Tensor, unbroadcast
-from model.mlp import MLP, Linear, mse_loss, make_moons_np, accuracy_from_logits, train_model
+from model.mlp import MLP, Linear
 
 
 # ============================================================
