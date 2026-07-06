@@ -578,9 +578,8 @@ def plot_four_panel_summary(linear_model, relu_model, X, y, neuron_id=0):
     x_min, x_max, y_min, y_max = get_plot_range(X)
     xx, yy, grid, _, _, _, _ = make_grid(X)
 
-    # --------------------------------------------------------
+
     # Panel 1: Linear decision boundary
-    # --------------------------------------------------------
     logits_linear = linear_model(Tensor(grid)).data.reshape(xx.shape)
     Z_linear = (logits_linear > 0.5).astype(float)
 
@@ -594,9 +593,8 @@ def plot_four_panel_summary(linear_model, relu_model, X, y, neuron_id=0):
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
 
-    # --------------------------------------------------------
+
     # Panel 2: Single ReLU gate
-    # --------------------------------------------------------
     W = relu_model.layers[0].W.data
     b = relu_model.layers[0].b.data
 
@@ -617,9 +615,7 @@ def plot_four_panel_summary(linear_model, relu_model, X, y, neuron_id=0):
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
 
-    # --------------------------------------------------------
     # Panel 3: First-layer ReLU switching lines
-    # --------------------------------------------------------
     ax = axes[1, 0]
     ax.scatter(X[:, 0], X[:, 1], c=y[:, 0], edgecolors="k", s=25)
 
@@ -643,9 +639,7 @@ def plot_four_panel_summary(linear_model, relu_model, X, y, neuron_id=0):
     ax.set_xlim(x_min, x_max)
     ax.set_ylim(y_min, y_max)
 
-    # --------------------------------------------------------
     # Panel 4: Final ReLU MLP decision boundary
-    # --------------------------------------------------------
     logits_relu = relu_model(Tensor(grid)).data.reshape(xx.shape)
     Z_relu = (logits_relu > 0.5).astype(float)
 
@@ -663,16 +657,12 @@ def plot_four_panel_summary(linear_model, relu_model, X, y, neuron_id=0):
     plt.show()
 
 
-# ============================================================
 # 10. Main
-# ============================================================
 
 if __name__ == "__main__":
     np.random.seed(0)
 
-    # --------------------------------------------------------
     # Generate data
-    # --------------------------------------------------------
     X_np, y_np = make_moons_np(
         n_samples=400,
         noise=0.15,
@@ -681,9 +671,7 @@ if __name__ == "__main__":
 
     plot_data(X_np, y_np, title="Two moons data")
 
-    # --------------------------------------------------------
     # Train linear model
-    # --------------------------------------------------------
     print("\nTraining linear model...")
     linear_model = MLP([2, 1], activation="none")
 
@@ -703,11 +691,9 @@ if __name__ == "__main__":
         title="Linear model on two moons"
     )
 
-    # --------------------------------------------------------
     # Train ReLU MLP
-    # --------------------------------------------------------
     print("\nTraining ReLU MLP...")
-    relu_model = MLP([2, 2, 2, 1], activation="relu")
+    relu_model = MLP([2, 32, 32, 1], activation="relu")
 
     train_model(
         model=relu_model,
@@ -718,9 +704,7 @@ if __name__ == "__main__":
         print_every=500
     )
 
-    # --------------------------------------------------------
     # Visualization sequence
-    # --------------------------------------------------------
 
     # 1. 单个 ReLU 神经元的开关区域
     plot_single_relu_gate(
@@ -769,10 +753,8 @@ if __name__ == "__main__":
         y=y_np,
         neuron_id=0
     )
-    
-    # --------------------------------------------------------
+
     # Second-layer ReLU visualization
-    # --------------------------------------------------------
 
     # 1. 第二层单个 ReLU 神经元的开关区域
     plot_single_second_layer_relu_gate(

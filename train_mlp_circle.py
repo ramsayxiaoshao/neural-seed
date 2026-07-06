@@ -736,7 +736,7 @@ if __name__ == "__main__":
     # Train linear model
     # --------------------------------------------------------
     print("\nTraining linear model...")
-    linear_model = MLP([2, 32, 32, 1], activation="none")
+    linear_model = MLP([2, 2, 2, 1], activation="none")
 
     train_model(
         model=linear_model,
@@ -758,7 +758,7 @@ if __name__ == "__main__":
     # Train ReLU MLP
     # --------------------------------------------------------
     print("\nTraining ReLU MLP...")
-    relu_model = MLP([2, 32, 32, 1], activation="relu")
+    relu_model = MLP([2, 2, 2, 1], activation="relu")
 
     train_model(
         model=relu_model,
